@@ -3,10 +3,13 @@
 INITIAL_DIRECTORY=$(pwd)
 
 sudo apt update && upgrade
-sudo apt install -i gparted tilix keepassxc alacarte grub-customizer gsmartcontrol calibre vim
+sudo apt install -y gparted tilix keepassxc alacarte grub-customizer gsmartcontrol calibre vim nemo conky-all
 
-### SETAR TILIX COMO TERMINAL PADRÃO ###
+flatpak install -y com.anydesk.Anydesk com.discordapp.Discord com.getpostman.Postman com.github.tchx84.Flatseal com.snes9x.Snes9x org.avidemux.Avidemux org.chromium.Chromium org.chromium.Chromium.Codecs org.duckstation.DuckStation org.flameshot.Flameshot org.gimp.GIMP org.inkscape.Inkscape org.libretro.RetroArch org.onlyoffice.desktopeditors org.qbittorrent.qBittorrent Dorg.signal.Signal rest.insomnia.Insomnia
+
+### SETAR PROGRAMAS PADRÃO ###
 sudo update-alternatives --config x-terminal-emulator
+xdg-mime default nemo.desktop inode/directory application/xgnome-saved-search
 
 ### VIM ###
 # Instalação do tema dracula
@@ -54,6 +57,9 @@ asdf install python 3.11-dev
 # PYCHARM_RELEASE='pycharm-community'
 PYCHARM_RELEASE='pycharm-professional'
 sudo snap install $PYCHARM_RELEASE --classic
+
+### SGBDs ###
+sudo apt install mysql-server mysql-client libmysqlclient-dev
 
 ### VAULT ###
 cd /tmp
