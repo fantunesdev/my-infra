@@ -3,7 +3,7 @@
 INITIAL_DIRECTORY=$(pwd)
 
 sudo apt update && sudo apt upgrade -y
-sudo apt install -y gparted tilix keepassxc alacarte grub-customizer gsmartcontrol calibre vim nemo conky-all
+sudo apt install -y gparted tilix keepassxc alacarte grub-customizer gsmartcontrol calibre vim nemo conky-all unzip
 
 flatpak install -y com.anydesk.Anydesk com.discordapp.Discord com.getpostman.Postman com.github.tchx84.Flatseal com.snes9x.Snes9x org.avidemux.Avidemux org.chromium.Chromium org.chromium.Chromium.Codecs org.duckstation.DuckStation org.flameshot.Flameshot org.gimp.GIMP org.inkscape.Inkscape org.libretro.RetroArch org.onlyoffice.desktopeditors org.qbittorrent.qBittorrent Dorg.signal.Signal rest.insomnia.Insomnia
 
@@ -42,7 +42,14 @@ echo >> $BASHRC_FILE
 
 ######## PYTHON ########
 
+echo -e "
+########################
+##       PYTHON       ##
+########################
+"
+
 # Instalação do PYENV
+echo 'Instalando o pyenv...'
 cd /tmp
 export PYENV_GIT_TAG=v2.2.5
 curl https://pyenv.run | bash
@@ -75,6 +82,8 @@ pip install pipx
 pipx install poetry
 poetry config virtualenvs.in-project = true
 
+######## PYTHON ########
+
 
 ######## PYCHARM ########
 # PYCHARM_RELEASE='pycharm-community'
@@ -99,18 +108,35 @@ sudo apt install -y code
 sudo apt install -y postgresql postgresql-contrib
 sudo apt install -y mysql-server mysql-client libmysqlclient-dev
 
+
 ######## VAULT ########
+
+echo -e "
+#######################
+##       VAULT       ##
+#######################
+"
 cd /tmp
-curl https://releases.hashicorp.com/vault/1.4.0/vault_1.4.0_linux_amd64.zip -o vault.zip
-unzip vault.zip
+
+echo 'Obtendo a última versão do vault...'
+URL='https://releases.hashicorp.com/vault/'
+VERSION=$(curl -s $URL | egrep -Eo "vault_[^/].[^/][^/].[^/]<" | cut -d"<" -f1 | head -n 1 | cut -d"_" -f2)
+
+echo "Instalando o Vault $VERSION (latest)..."
+DOWNLOAD_URL="https://releases.hashicorp.com/vault/$VERSION/vault_${VERSION}_linux_amd64.zip"
+curl $DOWNLOAD_URL -o vault_$VERSION.zip
+unzip vault_$VERSION.zip
 sudo mv vault /usr/local/bin
 vault -autocomplete-install
+unset VERSION
 
-######## VAULTCTL ########
-cd /tmp
+echo "Instalando o VaultCtl..."
 git clone git@github.com:fantunesdev/vaultctl.git
 cd vaultctl
 sudo ./install.sh
+
+######## VAULT ########
+
 
 ######## YouTube-DLG ########
 curl http://ubuntu.mirrors.tds.net/ubuntu/pool/universe/t/twodict/python-twodict_1.2-1_all.deb -o /tmp/python-twodict_1.2-1_all.deb
