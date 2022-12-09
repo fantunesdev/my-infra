@@ -2,7 +2,7 @@
 
 INITIAL_DIRECTORY=$(pwd)
 
-sudo apt update && upgrade
+sudo apt update && sudo apt upgrade -y
 sudo apt install -y gparted tilix keepassxc alacarte grub-customizer gsmartcontrol calibre vim nemo conky-all
 
 flatpak install -y com.anydesk.Anydesk com.discordapp.Discord com.getpostman.Postman com.github.tchx84.Flatseal com.snes9x.Snes9x org.avidemux.Avidemux org.chromium.Chromium org.chromium.Chromium.Codecs org.duckstation.DuckStation org.flameshot.Flameshot org.gimp.GIMP org.inkscape.Inkscape org.libretro.RetroArch org.onlyoffice.desktopeditors org.qbittorrent.qBittorrent Dorg.signal.Signal rest.insomnia.Insomnia
@@ -52,6 +52,12 @@ asdf install python 3.10.8
 asdf install python 3.10-dev
 asdf install python latest
 asdf install python 3.11-dev
+
+### PYENV ###
+cd /tmp
+export PYENV_GIT_TAG=v2.2.5
+curl https://pyenv.run | bash
+echo 'export PATH=$PATH:~/.pyenv/bin' >> ~/.bashrc
 
 ### PYCHARM ###
 # PYCHARM_RELEASE='pycharm-community'
