@@ -149,8 +149,10 @@ unset URL VERSION DOWNLOAD_URL
 echo "Instalando o VaultCtl..."
 cd /tmp
 git clone git@github.com:fantunesdev/vaultctl.git
-cd vaultctl
-sudo ./install.sh
+sudo mv vaultctl /var/lib/vaultctl
+sudo cp /var/lib/vaultctl/vaultctl.sh /usr/bin/vaultctl
+cd /var/lib/vaultctl
+poetry install
 
 ######## VAULT ########
 
