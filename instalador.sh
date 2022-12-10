@@ -3,9 +3,14 @@
 INITIAL_DIRECTORY=$(pwd)
 
 sudo apt update && sudo apt upgrade -y
-sudo apt install -y gparted tilix keepassxc alacarte grub-customizer gsmartcontrol calibre vim nemo conky-all unzip
+sudo apt install -y gparted tilix keepassxc alacarte gsmartcontrol calibre vim nemo conky-all unzip
+# grub-customizer
 
 flatpak install -y com.anydesk.Anydesk com.discordapp.Discord com.getpostman.Postman com.github.tchx84.Flatseal com.snes9x.Snes9x org.avidemux.Avidemux org.chromium.Chromium org.chromium.Chromium.Codecs org.duckstation.DuckStation org.flameshot.Flameshot org.gimp.GIMP org.inkscape.Inkscape org.libretro.RetroArch org.onlyoffice.desktopeditors org.qbittorrent.qBittorrent Dorg.signal.Signal rest.insomnia.Insomnia
+
+# SNAP
+sudo apt install -y snapd
+echo 'export PATH=$PATH:/snap/bin' >> ~/.bashrc
 
 ######## SETAR PROGRAMAS PADRÃO ########
 sudo update-alternatives --config x-terminal-emulator
@@ -18,7 +23,7 @@ cd ~/.vim/pack/themes/start
 git clone https://github.com/dracula/vim.git dracula
 echo -e 'packadd! dracula\nsyntax enable\ncolorscheme dracula' >> ~/.vim/vimrc
 # Contagem de linhas, não quebrar linha, indentação de 4 espaços e backspace de 4 espaços em linhas indentadas.
-echo -e 'set number wrap title tabstop=4 softtabstop=4\n' >> ~/.vim/vimrc
+echo -e 'set number wrap title\n' >> ~/.vim/vimrc
 
 
 ######## BRAVE BROWSER ########
@@ -51,20 +56,21 @@ echo -e "
 # Instalação do PYENV
 echo 'Instalando o pyenv...'
 cd /tmp
-export PYENV_GIT_TAG=v2.2.5
+export PYENV_GIT_TAG=v2.3.8
 curl https://pyenv.run | bash
 echo 'export PATH=$PATH:~/.pyenv/bin' >> ~/.bashrc
-exec bash
-sudo apt-get install -y python-tk python3-tk tk-dev
+echo 'export PATH=$PATH:~/.local/bin' >> ~/.bashrc
+echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+echo >> ~/.bashrc
+source ~/.bashrc
+sudo apt install -y libedit-dev libncurses5-dev zlib1g zlib1g-dev libssl-dev libbz2-dev libsqlite3-dev liblzma-dev libreadline-dev g++ make
+sudo apt install -y python-tk python3-tk tk-dev
 pyenv update
 
 # Instalação do python
-
-LATEST_PYTHON=$(pyenv latest 3)
-IFS='.'
-read -a LATEST_PYTHON_SPLITTED_STRING <<< $LATEST_PYTHON
-unset IFS
-HIGHER_VERSION=$(("${LATEST_PYTHON_SPLITTED_STRING[1]}"))
+LATEST_PYTHON=$(pyenv install --list | grep -E "3.[^/][^/].[^/]" | grep -v miniconda | grep -v pypy | grep -v anaconda | grep -v miniforge | grep -v nogil | grep -v dev | grep -v 0a3 | tail -1)
+HIGHER_VERSION=$(echo $LATEST_PYTHON | cut -d"." -f2)
 VERSION=$(($HIGHER_VERSION - 3))
 
 while ((VERSION <= HIGHER_VERSION)); do
@@ -75,12 +81,15 @@ done
 
 pyenv install anaconda3-2022:latest
 pyenv global $LATEST_PYTHON
+unset LATEST_PYTHON HIGHER_VERSION VERSION
 
 # Configurações
-pip install --upgrade pip
+pyenv exec pip install --upgrade pip
 pip install pipx
+exec bash
 pipx install poetry
-poetry config virtualenvs.in-project = true
+source ~/.bashrc
+poetry config virtualenvs.in-project true
 
 ######## PYTHON ########
 
@@ -93,12 +102,10 @@ sudo snap install $PYCHARM_RELEASE --classic
 
 ######## ASDF ########
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.10.2
-echo '. $HOME/.asdf/asdf.sh' >> $BASHRC_FILE
-echo '. $HOME/.asdf/completions/asdf.bash' >> $BASHRC_FILE
+echo '. $HOME/.asdf/asdf.sh' >> ~/.bashrc
+echo '. $HOME/.asdf/completions/asdf.bash' >> ~/.bashrc
 source ~/.bashrc
-asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
-sudo apt update
-sudo apt install python3 g++ make python3-pip
+asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git   
 
 
 ######## VSCODE ########
@@ -120,7 +127,7 @@ cd /tmp
 
 echo 'Obtendo a última versão do vault...'
 URL='https://releases.hashicorp.com/vault/'
-VERSION=$(curl -s $URL | egrep -Eo "vault_[^/].[^/][^/].[^/]<" | cut -d"<" -f1 | head -n 1 | cut -d"_" -f2)
+VERSION=$(curl -s $URL | grep -Eo "vault_[^/].[^/][^/].[^/]<" | cut -d"<" -f1 | head -n 1 | cut -d"_" -f2)
 
 echo "Instalando o Vault $VERSION (latest)..."
 DOWNLOAD_URL="https://releases.hashicorp.com/vault/$VERSION/vault_${VERSION}_linux_amd64.zip"
