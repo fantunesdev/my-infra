@@ -5,7 +5,7 @@ INITIAL_DIRECTORY=$(pwd)
 sudo apt update && sudo apt upgrade -y
 sudo apt install -y vim bashtop btop ncdu duf bat
 
-######## VIM ########
+######## TEMA DRACULA ########
 # Instalação do tema dracula
 mkdir -p ~/.vim/pack/themes/start
 cd ~/.vim/pack/themes/start
@@ -20,6 +20,10 @@ sudo mkdir /boot/grub/themes
 sudo mv grub/dracula/ /boot/grub/themes/
 echo 'GRUB_THEME="/boot/grub/themes/dracula/theme.txt"' >> /etc/default/grub
 sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+# Dracula no TILIX
+cd INITIAL_DIRECTORY
+cp files/tilix/Dracula.json ~/.config/tilix/schemes
 
 ######## CUSTOMIZAÇÕES DO TERMINAL ########
 echo >> ~/.bashrc

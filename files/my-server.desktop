@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=My-Server
+Comment=Inicia o servidor do Nginx
+Terminal=false
+Type=Application
+Categories=Network;
+Exec=vboxmanage startvm my-server --type headless
+X-GNOME-Autostart-enabled=true
+X-GNOME-Autostart-Delay=15;
+
+Comment[pt_BR]=Inicia o meu servidor

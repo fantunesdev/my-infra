@@ -1,0 +1,4 @@
+1. Copy `Dracula.json` under `~/.config/tilix/schemes` (first create directory if not exist)
+2. Go to `Preferences` and select your Tilix profile
+3. Select `Colors` tab
+4. Select `Dracula` from dropdown
