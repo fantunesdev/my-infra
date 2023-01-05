@@ -3,7 +3,7 @@
 INITIAL_DIRECTORY=$(pwd)
 
 sudo apt update && sudo apt upgrade -y
-sudo apt install -y vim bashtop btop ncdu duf bat
+sudo apt install -y vim bashtop btop ncdu duf bat tilix nemo
 
 ######## TEMA DRACULA ########
 # Instalação do tema dracula
@@ -45,7 +45,6 @@ conky -c ~/.config/conky/Extra/Gothan/Gotham
 cp $INITIAL_DIRECTORY/files/my-server.desktop ~/.config/autostart
 
 ######## SETAR PROGRAMAS PADRÃO ########
-sudo apt install -y tilix nemo
 sudo update-alternatives --config x-terminal-emulator
 xdg-mime default nemo.desktop inode/directory application/xgnome-saved-search
 
