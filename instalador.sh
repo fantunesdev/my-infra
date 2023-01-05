@@ -3,7 +3,7 @@
 INITIAL_DIRECTORY=$(pwd)
 
 sudo apt update && sudo apt upgrade -y
-sudo apt install -y vim
+sudo apt install -y vim bashtop btop ncdu duf bat
 
 ######## VIM ########
 # Instalação do tema dracula
@@ -30,12 +30,15 @@ echo 'export PSTRAD='\''\e[1;35m\u@\h\e[m:\e[1;34m\w\e[m$(__git_ps1)\e[m\]$ '\' 
 echo >> ~/.bashrc
 
 # Configurar o PATH
-echo 'export PATH=$PATH:/snap/bin:~/.pyenv/bin:~/.local/bin' >> ~/.bashrc
+echo 'export PATH=$PATH:/snap/bin:~/.pyenv/bin:~/.local/bin:~/git/bin' >> ~/.bashrc
 
 # Conky
 cp $INITIAL_DIRECTORY/files/conky ~/.config
 cp $INITIAL_DIRECTORY/files/conky/conky-startup.sh.desktop ~/.config/autostart
 conky -c ~/.config/conky/Extra/Gothan/Gotham
+
+# AutoStart do my-server
+cp $INITIAL_DIRECTORY/files/my-server.desktop ~/.config/autostart
 
 ######## SETAR PROGRAMAS PADRÃO ########
 sudo apt install -y tilix nemo
@@ -43,12 +46,12 @@ sudo update-alternatives --config x-terminal-emulator
 xdg-mime default nemo.desktop inode/directory application/xgnome-saved-search
 
 
-sudo apt install -y gparted keepassxc alacarte gsmartcontrol calibre conky-all unzip snapd code
+sudo apt install -y gparted keepassxc alacarte gsmartcontrol calibre conky-all unzip snapd code stacer virtualbox github-desktop clementine gnome-tweaks
 
 ####### PYENV DEPENDENCES ##########
 sudo apt install -y libedit-dev libncurses5-dev zlib1g zlib1g-dev libssl-dev libbz2-dev libsqlite3-dev liblzma-dev libreadline-dev g++ make python-tk python3-tk tk-dev
 
-flatpak install -y com.anydesk.Anydesk com.discordapp.Discord com.getpostman.Postman com.github.tchx84.Flatseal com.snes9x.Snes9x org.avidemux.Avidemux org.chromium.Chromium org.chromium.Chromium.Codecs org.duckstation.DuckStation org.flameshot.Flameshot org.gimp.GIMP org.inkscape.Inkscape org.libretro.RetroArch org.onlyoffice.desktopeditors org.qbittorrent.qBittorrent Dorg.signal.Signal rest.insomnia.Insomnia
+flatpak install -y com.anydesk.Anydesk com.discordapp.Discord com.getpostman.Postman com.github.tchx84.Flatseal com.snes9x.Snes9x org.avidemux.Avidemux org.chromium.Chromium org.chromium.Chromium.Codecs org.duckstation.DuckStation org.flameshot.Flameshot org.gimp.GIMP org.inkscape.Inkscape org.libretro.RetroArch org.onlyoffice.desktopeditors org.qbittorrent.qBittorrent Dorg.signal.Signal rest.insomnia.Insomnia in.srev.guiscrcpy com.ktechpit.whatsie com.spotify.Client
 
 
 ######## BRAVE BROWSER ########
@@ -118,10 +121,11 @@ echo '. $HOME/.asdf/asdf.sh' >> ~/.bashrc
 echo '. $HOME/.asdf/completions/asdf.bash' >> ~/.bashrc
 source ~/.bashrc
 asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git   
+asdf plugin-add java https://github.com/halcyon/asdf-java.git
 
 
 ######## SGBDs ########
-sudo apt install -y postgresql postgresql-contrib
+sudo apt install -y postgresql postgresql-contrib libpq-dev
 sudo apt install -y mysql-server mysql-client libmysqlclient-dev
 
 
@@ -151,6 +155,7 @@ cd /tmp
 git clone git@github.com:fantunesdev/vaultctl.git
 sudo mv vaultctl /var/lib/vaultctl
 sudo cp /var/lib/vaultctl/vaultctl.sh /usr/bin/vaultctl
+sudo chown fernando:fernando /var/lib/vaultctl
 cd /var/lib/vaultctl
 poetry install
 
