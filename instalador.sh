@@ -23,6 +23,8 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 # Dracula no TILIX
 cd INITIAL_DIRECTORY
+mkdir /home/fernando/.config/tilix/
+mkdir /home/fernando/.config/tilix/schemes
 cp files/tilix/Dracula.json ~/.config/tilix/schemes
 
 ######## CUSTOMIZAÇÕES DO TERMINAL ########
@@ -38,23 +40,25 @@ echo 'export PATH=$PATH:/snap/bin:~/.pyenv/bin:~/.local/bin:~/git/bin' >> ~/.bas
 
 # Conky
 cp $INITIAL_DIRECTORY/files/conky ~/.config
-cp $INITIAL_DIRECTORY/files/conky/conky-startup.sh.desktop ~/.config/autostart
+cp $INITIAL_DIRECTORY/files/conky/conky-startup.sh.desktop ~/.config/autostart/
 conky -c ~/.config/conky/Extra/Gothan/Gotham
 
 # AutoStart do my-server
-cp $INITIAL_DIRECTORY/files/my-server.desktop ~/.config/autostart
+cp $INITIAL_DIRECTORY/files/my-server.desktop ~/.config/autostart/
 
 ######## SETAR PROGRAMAS PADRÃO ########
 sudo update-alternatives --config x-terminal-emulator
 xdg-mime default nemo.desktop inode/directory application/xgnome-saved-search
 
 
-sudo apt install -y gparted keepassxc alacarte gsmartcontrol calibre conky-all unzip snapd code stacer virtualbox github-desktop clementine gnome-tweaks
+sudo apt install -y gparted keepassxc alacarte gsmartcontrol calibre conky-all unzip snapd code stacer virtualbox github-desktop clementine gnome-tweaks flameshot
 
 ####### PYENV DEPENDENCES ##########
 sudo apt install -y libedit-dev libncurses5-dev zlib1g zlib1g-dev libssl-dev libbz2-dev libsqlite3-dev liblzma-dev libreadline-dev g++ make python-tk python3-tk tk-dev
 
-flatpak install -y com.anydesk.Anydesk com.discordapp.Discord com.getpostman.Postman com.github.tchx84.Flatseal com.snes9x.Snes9x org.avidemux.Avidemux org.chromium.Chromium org.chromium.Chromium.Codecs org.duckstation.DuckStation org.flameshot.Flameshot org.gimp.GIMP org.inkscape.Inkscape org.libretro.RetroArch org.onlyoffice.desktopeditors org.qbittorrent.qBittorrent Dorg.signal.Signal rest.insomnia.Insomnia in.srev.guiscrcpy com.ktechpit.whatsie com.spotify.Client
+
+####### FLATPAKS #########
+flatpak install -y com.anydesk.Anydesk com.discordapp.Discord com.getpostman.Postman com.snes9x.Snes9x org.avidemux.Avidemux org.chromium.Chromium org.chromium.Chromium.Codecs org.duckstation.DuckStation org.gimp.GIMP org.inkscape.Inkscape org.libretro.RetroArch org.onlyoffice.desktopeditors org.qbittorrent.qBittorrent Dorg.signal.Signal rest.insomnia.Insomnia in.srev.guiscrcpy com.spotify.Client
 
 
 ######## BRAVE BROWSER ########
@@ -63,53 +67,7 @@ sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://b
 echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
 sudo apt update
 sudo apt install -y brave-browser
-
-
-######## PYTHON ########
-
-echo -e "
-########################
-##       PYTHON       ##
-########################
-"
-
-# Instalação do PYENV
-echo 'Instalando o pyenv...'
-cd /tmp
-export PYENV_GIT_TAG=v2.3.8
-curl https://pyenv.run | bash
-# echo 'export PATH=$PATH:~/.pyenv/bin' >> ~/.bashrc
-# echo 'export PATH=$PATH:~/.local/bin' >> ~/.bashrc
-# echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
-echo 'eval "$(pyenv init -)"' >> ~/.bashrc
-echo >> ~/.bashrc
-source ~/.bashrc
-pyenv update
-
-# Instalação do python
-LATEST_PYTHON=$(pyenv install --list | grep -E "3.[^/][^/].[^/]" | grep -v miniconda | grep -v pypy | grep -v anaconda | grep -v miniforge | grep -v nogil | grep -v dev | grep -v 0a3 | tail -1)
-HIGHER_VERSION=$(echo $LATEST_PYTHON | cut -d"." -f2)
-VERSION=$(($HIGHER_VERSION - 3))
-
-while ((VERSION <= HIGHER_VERSION)); do
-    pyenv install "3.$VERSION:latest"
-    pyenv install "3.$VERSION-dev"
-    let VERSION++
-done
-
-pyenv install anaconda3-2022:latest
-pyenv global $LATEST_PYTHON
-unset LATEST_PYTHON HIGHER_VERSION VERSION
-
-# Configurações
-pyenv exec pip install --upgrade pip
-pip install pipx
-exec bash
-pipx install poetry
-source ~/.bashrc
-poetry config virtualenvs.in-project true
-
-######## PYTHON ########
+cp /home/fernando/documentos/escritorio/Bookmarks/Bookmarks.json /home/fernando/.config/BraveSoftware/Brave-Browser/Default/Bookmarks
 
 
 ######## PYCHARM ########

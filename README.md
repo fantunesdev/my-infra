@@ -7,3 +7,4 @@ Automatização pós instalação do meu linux.
 > git clone git@github.com:fantunesdev/my-infra.git  
 > sudo apt update  
 > ./instalador.sh
+ 
