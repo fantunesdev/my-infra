@@ -31,7 +31,7 @@ cp files/tilix/Dracula.json ~/.config/tilix/schemes
 echo >> ~/.bashrc
 echo 'export PS1='\''\e[1;35m\u@\h\e[m:\e[1;34m\w\e[m$(__git_ps1)\e[m\]$ '\' >> ~/.bashrc
 echo >> ~/.bashrc
-echo 'echo export PSGIT='\''\e[1;35m\u@\h\e[m:\e[1;34m\w\e[m$(__git_ps1)\e[m\]\n$ '\' >> ~/.bashrc
+echo 'export PSGIT='\''\e[1;35m\u@\h\e[m:\e[1;34m\w\e[m$(__git_ps1)\e[m\]\n$ '\' >> ~/.bashrc
 echo 'export PSTRAD='\''\e[1;35m\u@\h\e[m:\e[1;34m\w\e[m$(__git_ps1)\e[m\]$ '\' >> ~/.bashrc
 echo >> ~/.bashrc
 
@@ -51,7 +51,7 @@ sudo update-alternatives --config x-terminal-emulator
 xdg-mime default nemo.desktop inode/directory application/xgnome-saved-search
 
 
-sudo apt install -y gparted keepassxc alacarte gsmartcontrol calibre conky-all unzip snapd code stacer virtualbox github-desktop clementine gnome-tweaks flameshot
+sudo apt install -y gparted keepassxc alacarte gsmartcontrol calibre conky-all unzip snapd code stacer virtualbox github-desktop gnome-tweaks flameshot youtube-dl vlc steam lutris
 
 ####### PYENV DEPENDENCES ##########
 sudo apt install -y libedit-dev libncurses5-dev zlib1g zlib1g-dev libssl-dev libbz2-dev libsqlite3-dev liblzma-dev libreadline-dev g++ make python-tk python3-tk tk-dev
@@ -88,36 +88,3 @@ asdf plugin-add java https://github.com/halcyon/asdf-java.git
 ######## SGBDs ########
 sudo apt install -y postgresql postgresql-contrib libpq-dev
 sudo apt install -y mysql-server mysql-client libmysqlclient-dev
-
-
-######## VAULT ########
-
-echo -e "
-#######################
-##       VAULT       ##
-#######################
-"
-cd /tmp
-
-echo 'Obtendo a última versão do vault...'
-URL='https://releases.hashicorp.com/vault/'
-VERSION=$(curl -s $URL | grep -Eo "vault_[^/].[^/][^/].[^/]<" | cut -d"<" -f1 | head -n 1 | cut -d"_" -f2)
-
-echo "Instalando o Vault $VERSION (latest)..."
-DOWNLOAD_URL="https://releases.hashicorp.com/vault/$VERSION/vault_${VERSION}_linux_amd64.zip"
-curl $DOWNLOAD_URL -o vault_$VERSION.zip
-unzip vault_$VERSION.zip
-sudo mv vault /usr/local/bin
-vault -autocomplete-install
-unset URL VERSION DOWNLOAD_URL
-
-echo "Instalando o VaultCtl..."
-cd /tmp
-git clone git@github.com:fantunesdev/vaultctl.git
-sudo mv vaultctl /var/lib/vaultctl
-sudo cp /var/lib/vaultctl/vaultctl.sh /usr/bin/vaultctl
-sudo chown fernando:fernando /var/lib/vaultctl
-cd /var/lib/vaultctl
-poetry install
-
-######## VAULT ########
