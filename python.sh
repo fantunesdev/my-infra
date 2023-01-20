@@ -3,9 +3,6 @@ echo 'Instalando o pyenv...'
 cd /tmp
 export PYENV_GIT_TAG=v2.3.8
 curl https://pyenv.run | bash
-# echo 'export PATH=$PATH:~/.pyenv/bin' >> ~/.bashrc
-# echo 'export PATH=$PATH:~/.local/bin' >> ~/.bashrc
-# echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
 echo 'eval "$(pyenv init -)"' >> ~/.bashrc
 echo >> ~/.bashrc
 source ~/.bashrc
@@ -31,5 +28,5 @@ pyenv exec pip install --upgrade pip
 pip install pipx
 exec bash
 pipx install poetry
-source ~/.bashrc
-poetry config virtualenvs.in-project true
+exec bash
+poetry config virtualenvs.in-pro    ect true
