@@ -47,12 +47,11 @@ sudo apt install -y libedit-dev libncurses5-dev zlib1g zlib1g-dev libssl-dev lib
 
 
 ####### FLATPAKS #########
-flatpak install -y com.anydesk.Anydesk com.discordapp.Discord com.getpostman.Postman com.snes9x.Snes9x org.avidemux.Avidemux org.chromium.Chromium org.chromium.Chromium.Codecs org.duckstation.DuckStation org.gimp.GIMP org.inkscape.Inkscape org.libretro.RetroArch org.onlyoffice.desktopeditors org.qbittorrent.qBittorrent Dorg.signal.Signal rest.insomnia.Insomnia in.srev.guiscrcpy com.spotify.Client io.github.Foldex.AdwSteamGt
+flatpak install -y com.anydesk.Anydesk com.discordapp.Discord com.getpostman.Postman com.snes9x.Snes9x org.avidemux.Avidemux org.chromium.Chromium org.chromium.Chromium.Codecs org.duckstation.DuckStation org.gimp.GIMP org.inkscape.Inkscape org.libretro.RetroArch org.onlyoffice.desktopeditors org.qbittorrent.qBittorrent Dorg.signal.Signal rest.insomnia.Insomnia in.srev.guiscrcpy com.spotify.Client io.github.Foldex.AdwSteamGt com.authy.Authy
 
 
 ######## SNAPS ########
 
-sudo snap install authy
 PYCHARM_RELEASE='pycharm-professional'
 sudo snap install $PYCHARM_RELEASE --classic
 
