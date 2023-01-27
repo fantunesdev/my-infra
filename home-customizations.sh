@@ -11,8 +11,7 @@ echo -e 'set number nowrap\n' >> ~/.vim/vimrc
 
 # Dracula no TILIX
 cd INITIAL_DIRECTORY
-mkdir /home/fernando/.config/tilix/
-mkdir /home/fernando/.config/tilix/schemes
+mkdir -p /home/fernando/.config/tilix/schemes
 cp files/tilix/Dracula.json ~/.config/tilix/schemes
 
 
