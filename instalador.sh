@@ -40,7 +40,7 @@ sudo apt install -y brave-browser
 cp /home/fernando/documentos/escritorio/Bookmarks/Bookmarks.json /home/fernando/.config/BraveSoftware/Brave-Browser/Default/Bookmarks
 
 
-######## STRAWBERY 
+######## STRAWBERY ########
 STRAWBERY_URL='https://files.strawberrymusicplayer.org/'
 LATEST_STRAWBERY=$(curl $STRAWBERY_URL | grep $UBUNTU_CODENAME | grep -v sha256sum | cut -d"=" -f4 | cut -d">" -f1 | cut -d"\"" -f2  | tail -1)
 wget $STRAWBERY_URL$LATEST_STRAWBERY
@@ -48,7 +48,7 @@ sudo apt install -y ./$LATEST_STRAWBERY
 sudo apt --fix-broken install -y
 
 
-####### PYENV DEPENDENCES ##########
+####### PYENV DEPENDENCES ########
 sudo apt install -y libedit-dev libncurses5-dev zlib1g zlib1g-dev libssl-dev libbz2-dev libsqlite3-dev \
 liblzma-dev libreadline-dev g++ make python-tk python3-tk tk-dev
 
