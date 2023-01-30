@@ -4,8 +4,11 @@ INITIAL_DIRECTORY=$(pwd)
 UBUNTU_CODENAME=$(cat /etc/os-release | grep UBUNTU_CODENAME | cut -d '=' -f2)
 
 sudo apt update && sudo apt upgrade -y
-sudo apt install -y vim bashtop btop ncdu duf bat tilix nemo
 
+######## FERRAMENTAS DE SISTEMA ########
+sudo apt install -y vim bashtop btop ncdu duf bat tilix nemo postfix hplip
+
+######## MONTAGEM DOS HDs ########
 sudo mount -t ntfs /dev/sdb1 /home/fernando/Downloads/
 mv /home/fernando/Documentos/ /home/fernando/documentos/
 sudo mount -t ntfs /dev/sdc1 /home/fernando/documentos/
@@ -79,3 +82,6 @@ UNIFIED_REMOTE_URL="https://www.unifiedremote.com$REDIRECT_LINK"
 wget $UNIFIED_REMOTE_URL
 UNIFIED_REMOTE_VERSION=$(echo $REDIRECT_LINK | rev | cut -d'/' -f1 | rev)
 sudo apt install -y ./$UNIFIED_REMOTE_VERSION
+
+######## SCANNER HP PSC 1500 ########
+sudo hp-setup
