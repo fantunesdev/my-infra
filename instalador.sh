@@ -1,17 +1,76 @@
 #!/bin/bash
 
+######## VARIÁVEIS GERAIS ########
+
 INITIAL_DIRECTORY=$(pwd)
 UBUNTU_CODENAME=$(cat /etc/os-release | grep UBUNTU_CODENAME | cut -d '=' -f2)
 
+# CORES
+RED='\e[1;91m'
+GREEN='\e[1;92m'
+NO_COLOR='\e[0m'
+
+
+######## FUNÇÕES ########
+
+function prog_installer() {
+    package_manager=$1
+    programs=$2
+    if [ $package_manager == 'apt' ]; then
+        for program in ${programs[@]}; do
+            if ! dpkg -l | grep -q $program; then
+                sudo apt install -y $program;
+            else
+                echo -e "${GREEN}[INSTALADO] $program${NO_COLOR}"
+            fi
+        done
+    elif [ $package_manager == 'flatpak' ]; then
+        for program in ${programs[@]}; do
+            if ! flatpak list | grep -q $program; then
+                flatpak install -y $program;
+            else
+                echo -e "${GREEN}[INSTALADO] $program${NO_COLOR}"
+            fi
+        done
+    else
+        echo -e "${RED}[ERROR] Gerenciaor de pacotes inválido.${NO_COLOR}"
+        echo 'Gerenciadores de pacotes válidos: apt e flatpak.'
+        echo 'Por favor, tente novamente.'
+        exit 2
+    fi
+}
+
+
+# UPDATE
 sudo apt update && sudo apt upgrade -y
 
+
 ######## FERRAMENTAS DE SISTEMA ########
-sudo apt install -y vim bashtop btop ncdu duf bat tilix nemo postfix hplip
+SYSTEM_TOOLS=(
+    vim         # Editor vi melhorado
+    unzip       # Desarquivador para arquivos .zip
+    bashtop     # Monitor de recursos em linha de comando
+    btop        # Monitor de recursos em linha de comando
+    ncdu        # Visualizador de uso de disco em ncurses
+    duf         # Disk Usage/Free Utility
+    bat         # Cat(1) clone with syntax highlighting and git integration
+    tilix       # Tiling terminal emulator - data files
+    nemo        # Gerenciador de arquivos e shell gráfico para Cinnamon
+    postfix     # agente de transporte de e-mail ("mail transport agent") de alta performance - (Relatórios rsync)
+    hplip       # Sistema de Imagem e Impressão HP Linux (HPLIP) - Driver do Scanner
+)
+system_tools="${SYSTEM_TOOLS[@]}"
+
+prog_installer apt "$system_tools"
+
+unset SYSTEM_TOOLS system_tools
+
 
 ######## MONTAGEM DOS HDs ########
 sudo mount -t ntfs /dev/sdb1 /home/fernando/Downloads/
 mv /home/fernando/Documentos/ /home/fernando/documentos/
 sudo mount -t ntfs /dev/sdc1 /home/fernando/documentos/
+
 
 # Instalação do dracula no Grub
 cd /tmp
@@ -28,10 +87,35 @@ xdg-mime default nemo.desktop inode/directory application/xgnome-saved-search
 
 
 ######## APT ########
+APT_PROGRAMS=(
+    gparted             # editor de partições GNOME
+    keepassxc           # gerenciador de senhas interplataforma
+    alacarte            # ferramenta de fácil edição do menu GNOME
+    gsmartcontrol       # graphical user interface for smartctl
+    calibre             # gerenciador de e-books poderoso e fácil de usar
+    conky-all           # highly configurable system monitor (all features enabled)
+    snapd               # daemon e ferramentas para habilitar pacotes snap
+    code                # VS Code
+    stacer              # Linux system optimizer and monitoring
+    virtualbox          # solução de virtualização x86 - binários base
+    github-desktop      # Simple collaboration from your desktop
+    gnome-tweaks        # ferramenta para ajustar as configurações avançadas do GNOME
+    flameshot           # software poderoso, ainda que simples de usar, de captura de tela
+    youtubedl-gui       # GUI on youtube-dl to download videos from a variety of sites
+    vlc                 # reprodutor e gerador de fluxo multimídia
+    steam               # Valve's Steam digital software delivery system
+    lutris              # video game preservation platform
+    audacity            # editor de áudio multiplataforma rápido
+    kdenlive            # editor de vídeo não-linear
+    telegram-desktop    # aplicativo de mensagens rápido e seguro
+    folder-color        # folder color for nautilus
+    gnome-sushi         # sushi é um pré-visualizador rápido para o nautilus
+)
+apt_programs="${APT_PROGRAMS[@]}"
 
-sudo apt install -y gparted keepassxc alacarte gsmartcontrol calibre conky-all unzip snapd code stacer \
-virtualbox github-desktop gnome-tweaks flameshot youtube-dl youtubedl-gui vlc steam lutris audacity \
-telegram-desktop
+prog_installer apt "$apt_programs"
+
+unset APT_PROGRAMS apt_programs
 
 
 ######## BRAVE BROWSER ########
@@ -50,29 +134,87 @@ wget $STRAWBERY_URL$LATEST_STRAWBERY
 sudo apt install -y ./$LATEST_STRAWBERY
 sudo apt --fix-broken install -y
 
+unset STRAWBERY_URL LATEST_STRAWBERY
+
 
 ####### PYENV DEPENDENCES ########
-sudo apt install -y libedit-dev libncurses5-dev zlib1g zlib1g-dev libssl-dev libbz2-dev libsqlite3-dev \
-liblzma-dev libreadline-dev g++ make python-tk python3-tk tk-dev
+PYENV_DEPENDENCES=(
+    libedit-dev         # Bibliotecas editline e history do BSD (desenvolvimento).
+    libncurses5-dev     # transitional package for libncurses-dev
+    zlib1g              # biblioteca de compressão - runtime (tempo de execução)
+    zlib1g-dev          # biblioteca de compressão - desenvolvimento
+    libssl-dev          # conjunto de ferramentas do Secure Sockets Layer - arquivos de desenvolvimento
+    libbz2-dev          # high-quality block-sorting file compressor library - development
+    libsqlite3-dev      # SQLite 3 development files
+    liblzma-dev         # XZ-format compression library - development files
+    libreadline-dev     # GNU readline and history libraries, development files
+    g++                 # Compilador GCC
+    make                # tool which controls the generation of executables and other non-source files of a program from the program's source files.
+    python-tk           # Tkinter - Writing Tk applications with Python2
+    python3-tk          # Tkinter - Writing Tk applications with Python 3.x
+    tk-dev              # Toolkit for Tcl and X11 (default version) - development files
+)
+pyenv_dependences="${PYENV_DEPENDENCES[@]}"
+
+prog_installer apt "$pyenv_dependences"
+
+unset PYENV_DEPENDENCES pyenv_dependences
 
 
 ####### FLATPAKS #########
-flatpak install -y com.anydesk.Anydesk com.discordapp.Discord com.getpostman.Postman com.snes9x.Snes9x \
-org.avidemux.Avidemux org.chromium.Chromium org.chromium.Chromium.Codecs org.duckstation.DuckStation \
-org.gimp.GIMP org.inkscape.Inkscape org.libretro.RetroArch org.onlyoffice.desktopeditors \
-org.qbittorrent.qBittorrent Dorg.signal.Signal rest.insomnia.Insomnia in.srev.guiscrcpy \
-com.spotify.Client io.github.Foldex.AdwSteamGt com.authy.Authy net.ankiweb.Anki com.bitwarden.desktop
+FLATPAK_PROGRAMS=(
+    com.anydesk.Anydesk             # Conectar com um computador remotamente
+    com.discordapp.Discord          # Messaging, Voice, and Video Client
+    com.getpostman.Postman          # Postman is a complete API development environment.
+    rest.insomnia.Insomnia          # Open Source API Client and Design Platform for GraphQL, REST and gRPC.
+    org.avidemux.Avidemux           # Multi-purpose video editing and processing software
+    com.google.Chrome               # The web browser from Google
+    org.chromium.Chromium           # The web browser from Chromium project
+    org.gimp.GIMP                   # Programa de manipulação de imagens
+    org.inkscape.Inkscape           # Editor de Imagens Vetoriais
+    com.snes9x.Snes9x               # A Super Nintendo emulator
+    io.github.Foldex.AdwSteamGt     # Adwaita for Steam Skin Installer
+    org.duckstation.DuckStation     # PlayStation 1/PSX emulator.
+    org.libretro.RetroArch          # Frontend for emulators, game engines and media players
+    com.bitwarden.desktop           # A secure and free password manager for all of your devices
+    com.authy.Authy                 # Twilio Authy two factor authentication desktop application
+    org.onlyoffice.desktopeditors   # Office productivity suite
+    org.qbittorrent.qBittorrent     # An open-source Bittorrent client
+    Dorg.signal.Signal              # Programa de mensagens instantâneas
+    in.srev.guiscrcpy               # Android Screen Mirroring Software
+    com.spotify.Client              # Online music streaming service
+    net.ankiweb.Anki                # Powerful, intelligent flash cards
+)
+
+flatpak_programs="${FLATPAK_PROGRAMS[@]}"
+
+prog_installer flatpak "$flatpak_programs"
+
+unset FLATPAK_PROGRAMS flatpak_programs
 
 
 ######## SNAPS ########
-
 PYCHARM_RELEASE='pycharm-professional'
 sudo snap install $PYCHARM_RELEASE --classic
 
+unset PYCHARM_RELEASE
+
 
 ######## SGBDs ########
-sudo apt install -y postgresql postgresql-contrib libpq-dev
-sudo apt install -y mysql-server mysql-client libmysqlclient-dev
+SGBDS=(
+    postgresql              # banco de dados SQL objeto-relacional (versão com suporte)
+    postgresql-contrib      # additional facilities for PostgreSQL (supported version)
+    libpq-dev               # arquivos de cabeçalho parao libpq5 (biblioteca PostgreSQL)
+    mysql-server            # MySQL database server (metapackage depending on the latest version)
+    mysql-client            # MySQL database client binaries
+    libmysqlclient-dev      # arquivos de desenvolvimento do banco de dados MySQL
+)
+
+sgbds="${SGBDS[@]}"
+
+prog_installer flatpak "$sgbds"
+
+unset SGBDS sgbds
 
 
 ######## UNIFIED REMOTE ########
@@ -82,6 +224,8 @@ UNIFIED_REMOTE_URL="https://www.unifiedremote.com$REDIRECT_LINK"
 wget $UNIFIED_REMOTE_URL
 UNIFIED_REMOTE_VERSION=$(echo $REDIRECT_LINK | rev | cut -d'/' -f1 | rev)
 sudo apt install -y ./$UNIFIED_REMOTE_VERSION
+
+unset REDIRECT_LINK UNIFIED_REMOTE_URL UNIFIED_REMOTE_VERSION
 
 ######## SCANNER HP PSC 1500 ########
 sudo hp-setup
