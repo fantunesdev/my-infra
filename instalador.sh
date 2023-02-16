@@ -229,3 +229,8 @@ unset REDIRECT_LINK UNIFIED_REMOTE_URL UNIFIED_REMOTE_VERSION
 
 ######## SCANNER HP PSC 1500 ########
 sudo hp-setup
+
+
+######## LIMPEZA ########
+sudo apt autoclean -y
+sudo apt autoremove -y
