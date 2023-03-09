@@ -21,7 +21,7 @@ function prog_installer() {
             if ! dpkg -l | grep -q $program; then
                 sudo apt install -y $program;
             else
-                echo -e "${GREEN}[INSTALADO] $program${NO_COLOR}"
+                echo -e "${GREEN}[JÁ INSTALADO] $program${NO_COLOR}"
             fi
         done
     elif [ $package_manager == 'flatpak' ]; then
@@ -29,7 +29,7 @@ function prog_installer() {
             if ! flatpak list | grep -q $program; then
                 flatpak install -y $program;
             else
-                echo -e "${GREEN}[INSTALADO] $program${NO_COLOR}"
+                echo -e "${GREEN}[JÁ INSTALADO] $program${NO_COLOR}"
             fi
         done
     else

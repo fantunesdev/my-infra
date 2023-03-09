@@ -29,4 +29,4 @@ pip install pipx
 exec bash
 pipx install poetry
 exec bash
-poetry config virtualenvs.in-pro    ect true
+poetry config virtualenvs.in-project true
