@@ -163,27 +163,32 @@ unset PYENV_DEPENDENCES pyenv_dependences
 
 ####### FLATPAKS #########
 FLATPAK_PROGRAMS=(
-    com.anydesk.Anydesk             # Conectar com um computador remotamente
-    com.discordapp.Discord          # Messaging, Voice, and Video Client
-    com.getpostman.Postman          # Postman is a complete API development environment.
-    rest.insomnia.Insomnia          # Open Source API Client and Design Platform for GraphQL, REST and gRPC.
-    org.avidemux.Avidemux           # Multi-purpose video editing and processing software
-    com.google.Chrome               # The web browser from Google
-    org.chromium.Chromium           # The web browser from Chromium project
-    org.gimp.GIMP                   # Programa de manipulação de imagens
-    org.inkscape.Inkscape           # Editor de Imagens Vetoriais
-    com.snes9x.Snes9x               # A Super Nintendo emulator
-    io.github.Foldex.AdwSteamGt     # Adwaita for Steam Skin Installer
-    org.duckstation.DuckStation     # PlayStation 1/PSX emulator.
-    org.libretro.RetroArch          # Frontend for emulators, game engines and media players
-    com.bitwarden.desktop           # A secure and free password manager for all of your devices
-    com.authy.Authy                 # Twilio Authy two factor authentication desktop application
-    org.onlyoffice.desktopeditors   # Office productivity suite
-    org.qbittorrent.qBittorrent     # An open-source Bittorrent client
-    Dorg.signal.Signal              # Programa de mensagens instantâneas
-    in.srev.guiscrcpy               # Android Screen Mirroring Software
-    com.spotify.Client              # Online music streaming service
-    net.ankiweb.Anki                # Powerful, intelligent flash cards
+    com.anydesk.Anydesk                     # Conectar com um computador remotamente
+    com.discordapp.Discord                  # Messaging, Voice, and Video Client
+    com.getpostman.Postman                  # Postman is a complete API development environment.
+    rest.insomnia.Insomnia                  # Open Source API Client and Design Platform for GraphQL, REST and gRPC.
+    org.avidemux.Avidemux                   # Multi-purpose video editing and processing software
+    com.google.Chrome                       # The web browser from Google
+    org.chromium.Chromium                   # The web browser from Chromium project
+    org.gimp.GIMP                           # Programa de manipulação de imagens
+    org.inkscape.Inkscape                   # Editor de Imagens Vetoriais
+    com.snes9x.Snes9x                       # A Super Nintendo emulator
+    io.github.Foldex.AdwSteamGt             # Adwaita for Steam Skin Installer
+    org.duckstation.DuckStation             # PlayStation 1/PSX emulator.
+    org.libretro.RetroArch                  # Frontend for emulators, game engines and media players
+    com.bitwarden.desktop                   # A secure and free password manager for all of your devices
+    com.authy.Authy                         # Twilio Authy two factor authentication desktop application
+    org.onlyoffice.desktopeditors           # Office productivity suite
+    org.qbittorrent.qBittorrent             # An open-source Bittorrent client
+    Dorg.signal.Signal                      # Programa de mensagens instantâneas
+    in.srev.guiscrcpy                       # Android Screen Mirroring Software
+    com.spotify.Client                      # Online music streaming service
+    net.ankiweb.Anki                        # Powerful, intelligent flash cards
+    com.github.hluk.copyq                   # Advanced clipboard manager
+    org.kde.kolourpaint                     # Programa de Pintura
+    com.github.ADBeveridge.Raider           # Apague seus arquivos de forma segura
+    com.github.bcedu.valasimplehttpserver   # Access your files from any device on the same network
+    io.github.cboxdoerfer.FSearch           # Software de busca de arquivos com interface gráfica
 )
 
 flatpak_programs="${FLATPAK_PROGRAMS[@]}"
