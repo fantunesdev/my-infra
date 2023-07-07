@@ -189,6 +189,7 @@ FLATPAK_PROGRAMS=(
     com.github.ADBeveridge.Raider           # Apague seus arquivos de forma segura
     com.github.bcedu.valasimplehttpserver   # Access your files from any device on the same network
     io.github.cboxdoerfer.FSearch           # Software de busca de arquivos com interface gráfica
+    com.neatdecisions.Detwinner             # Find and remove duplicate files and similar images
 )
 
 flatpak_programs="${FLATPAK_PROGRAMS[@]}"
