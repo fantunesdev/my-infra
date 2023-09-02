@@ -1,7 +1,7 @@
 # Instalação do PYENV
 echo 'Instalando o pyenv...'
 cd /tmp
-export PYENV_GIT_TAG=v2.3.8
+export PYENV_GIT_TAG=v2.3.23
 curl https://pyenv.run | bash
 echo 'eval "$(pyenv init -)"' >> ~/.bashrc
 echo >> ~/.bashrc
@@ -22,6 +22,9 @@ done
 pyenv install anaconda3-2022:latest
 pyenv global $LATEST_PYTHON
 unset LATEST_PYTHON HIGHER_VERSION VERSION
+
+# Instalação do pyenv update
+git clone https://github.com/pyenv/pyenv-update.git $(pyenv root)/plugins/pyenv-update
 
 # Configurações
 pyenv exec pip install --upgrade pip
