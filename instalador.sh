@@ -241,3 +241,7 @@ sudo hp-setup
 ######## LIMPEZA ########
 sudo apt autoclean -y
 sudo apt autoremove -y
+
+
+######## Criação do alias git hist para formatação do git log ########
+git config --global alias.hist "log --pretty=format:'%C(green)[%ad]%C(reset) %C(bold red)[%h]%C(reset) | %C(white bold)%s %C(bold yellow)%an%C(reset) %C(blue)%d%C(reset)' --graph --date=short"
