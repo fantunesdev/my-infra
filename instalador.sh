@@ -24,6 +24,14 @@ function prog_installer() {
                 echo -e "${GREEN}[JÁ INSTALADO] $program${NO_COLOR}"
             fi
         done
+    if [ $package_manager == 'nala' ]; then
+        for program in ${programs[@]}; do
+            if ! dpkg -l | grep -q $program; then
+                sudo nala install -y $program;
+            else
+                echo -e "${GREEN}[JÁ INSTALADO] $program${NO_COLOR}"
+            fi
+        done
     elif [ $package_manager == 'flatpak' ]; then
         for program in ${programs[@]}; do
             if ! flatpak list | grep -q $program; then
@@ -47,17 +55,18 @@ sudo apt update && sudo apt upgrade -y
 
 ######## FERRAMENTAS DE SISTEMA ########
 SYSTEM_TOOLS=(
-    vim         # Editor vi melhorado
-    unzip       # Desarquivador para arquivos .zip
     bashtop     # Monitor de recursos em linha de comando
-    btop        # Monitor de recursos em linha de comando
-    ncdu        # Visualizador de uso de disco em ncurses
-    duf         # Disk Usage/Free Utility
     bat         # Cat(1) clone with syntax highlighting and git integration
-    tilix       # Tiling terminal emulator - data files
+    btop        # Monitor de recursos em linha de comando
+    duf         # Disk Usage/Free Utility
+    hplip       # Sistema de Imagem e Impressão HP Linux (HPLIP) - Driver do Scanner
+    nala        # Commandline frontend for the APT package manager
+    ncdu        # Visualizador de uso de disco em ncurses
     nemo        # Gerenciador de arquivos e shell gráfico para Cinnamon
     postfix     # agente de transporte de e-mail ("mail transport agent") de alta performance - (Relatórios rsync)
-    hplip       # Sistema de Imagem e Impressão HP Linux (HPLIP) - Driver do Scanner
+    tilix       # Tiling terminal emulator - data files
+    unzip       # Desarquivador para arquivos .zip
+    vim         # Editor vi melhorado
 )
 system_tools="${SYSTEM_TOOLS[@]}"
 
@@ -139,24 +148,24 @@ unset STRAWBERY_URL LATEST_STRAWBERY
 
 ####### PYENV DEPENDENCES ########
 PYENV_DEPENDENCES=(
+    g++                 # Compilador GCC
     libedit-dev         # Bibliotecas editline e history do BSD (desenvolvimento).
     libncurses5-dev     # transitional package for libncurses-dev
-    zlib1g              # biblioteca de compressão - runtime (tempo de execução)
-    zlib1g-dev          # biblioteca de compressão - desenvolvimento
     libssl-dev          # conjunto de ferramentas do Secure Sockets Layer - arquivos de desenvolvimento
     libbz2-dev          # high-quality block-sorting file compressor library - development
     libsqlite3-dev      # SQLite 3 development files
     liblzma-dev         # XZ-format compression library - development files
     libreadline-dev     # GNU readline and history libraries, development files
-    g++                 # Compilador GCC
     make                # tool which controls the generation of executables and other non-source files of a program from the program's source files.
     python-tk           # Tkinter - Writing Tk applications with Python2
     python3-tk          # Tkinter - Writing Tk applications with Python 3.x
     tk-dev              # Toolkit for Tcl and X11 (default version) - development files
+    zlib1g              # biblioteca de compressão - runtime (tempo de execução)
+    zlib1g-dev          # biblioteca de compressão - desenvolvimento
 )
 pyenv_dependences="${PYENV_DEPENDENCES[@]}"
 
-prog_installer apt "$pyenv_dependences"
+prog_installer nala "$pyenv_dependences"
 
 unset PYENV_DEPENDENCES pyenv_dependences
 
@@ -201,7 +210,7 @@ unset FLATPAK_PROGRAMS flatpak_programs
 
 
 ######## SNAPS ########
-PYCHARM_RELEASE='pycharm-professional'
+PYCHARM_RELEASE='pycharm-community'
 sudo snap install $PYCHARM_RELEASE --classic
 
 unset PYCHARM_RELEASE
