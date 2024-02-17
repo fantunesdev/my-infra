@@ -97,42 +97,42 @@ xdg-mime default nemo.desktop inode/directory application/xgnome-saved-search
 
 ######## APT ########
 APT_PROGRAMS=(
-    gparted             # editor de partições GNOME
-    keepassxc           # gerenciador de senhas interplataforma
     alacarte            # ferramenta de fácil edição do menu GNOME
-    gsmartcontrol       # graphical user interface for smartctl
-    calibre             # gerenciador de e-books poderoso e fácil de usar
-    conky-all           # highly configurable system monitor (all features enabled)
-    snapd               # daemon e ferramentas para habilitar pacotes snap
-    code                # VS Code
-    stacer              # Linux system optimizer and monitoring
-    virtualbox          # solução de virtualização x86 - binários base
-    github-desktop      # Simple collaboration from your desktop
-    gnome-tweaks        # ferramenta para ajustar as configurações avançadas do GNOME
-    flameshot           # software poderoso, ainda que simples de usar, de captura de tela
-    youtubedl-gui       # GUI on youtube-dl to download videos from a variety of sites
-    vlc                 # reprodutor e gerador de fluxo multimídia
-    steam               # Valve's Steam digital software delivery system
-    lutris              # video game preservation platform
     audacity            # editor de áudio multiplataforma rápido
-    kdenlive            # editor de vídeo não-linear
-    telegram-desktop    # aplicativo de mensagens rápido e seguro
+    calibre             # gerenciador de e-books poderoso e fácil de usar
+    code                # VS Code
+    conky-all           # highly configurable system monitor (all features enabled)
+    flameshot           # software poderoso, ainda que simples de usar, de captura de tela
     folder-color        # folder color for nautilus
+    github-desktop      # Simple collaboration from your desktop
     gnome-sushi         # sushi é um pré-visualizador rápido para o nautilus
+    gnome-tweaks        # ferramenta para ajustar as configurações avançadas do GNOME
+    gparted             # editor de partições GNOME
+    gsmartcontrol       # graphical user interface for smartctl
+    kdenlive            # editor de vídeo não-linear
+    keepassxc           # gerenciador de senhas interplataforma
+    lutris              # video game preservation platform
+    snapd               # daemon e ferramentas para habilitar pacotes snap
+    stacer              # Linux system optimizer and monitoring
+    steam               # Valve's Steam digital software delivery system
+    telegram-desktop    # aplicativo de mensagens rápido e seguro
+    virtualbox          # solução de virtualização x86 - binários base
+    vlc                 # reprodutor e gerador de fluxo multimídia
+    youtubedl-gui       # GUI on youtube-dl to download videos from a variety of sites
 )
 apt_programs="${APT_PROGRAMS[@]}"
 
-prog_installer apt "$apt_programs"
+prog_installer nala "$apt_programs"
 
 unset APT_PROGRAMS apt_programs
 
 
 ######## BRAVE BROWSER ########
-sudo apt install -y apt-transport-https curl
+sudo nala install -y apt-transport-https curl
 sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
 echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-sudo apt update
-sudo apt install -y brave-browser
+sudo nala update
+sudo nala install -y brave-browser
 cp /home/fernando/documentos/escritorio/Bookmarks/Bookmarks.json /home/fernando/.config/BraveSoftware/Brave-Browser/Default/Bookmarks
 
 
@@ -140,8 +140,8 @@ cp /home/fernando/documentos/escritorio/Bookmarks/Bookmarks.json /home/fernando/
 STRAWBERY_URL='https://files.strawberrymusicplayer.org/'
 LATEST_STRAWBERY=$(curl $STRAWBERY_URL | grep $UBUNTU_CODENAME | grep -v sha256sum | cut -d"=" -f4 | cut -d">" -f1 | cut -d"\"" -f2  | tail -1)
 wget $STRAWBERY_URL$LATEST_STRAWBERY
-sudo apt install -y ./$LATEST_STRAWBERY
-sudo apt --fix-broken install -y
+sudo nala install -y ./$LATEST_STRAWBERY
+sudo nala --fix-broken install -y
 
 unset STRAWBERY_URL LATEST_STRAWBERY
 
@@ -239,7 +239,7 @@ REDIRECT_LINK=$(curl https://www.unifiedremote.com/download/linux-x64-deb | cut 
 UNIFIED_REMOTE_URL="https://www.unifiedremote.com$REDIRECT_LINK"
 wget $UNIFIED_REMOTE_URL
 UNIFIED_REMOTE_VERSION=$(echo $REDIRECT_LINK | rev | cut -d'/' -f1 | rev)
-sudo apt install -y ./$UNIFIED_REMOTE_VERSION
+sudo nala install -y ./$UNIFIED_REMOTE_VERSION
 
 unset REDIRECT_LINK UNIFIED_REMOTE_URL UNIFIED_REMOTE_VERSION
 
@@ -248,8 +248,8 @@ sudo hp-setup
 
 
 ######## LIMPEZA ########
-sudo apt autoclean -y
-sudo apt autoremove -y
+sudo nala autoclean -y
+sudo nala autoremove -y
 
 
 ######## Criação do alias git hist para formatação do git log ########
